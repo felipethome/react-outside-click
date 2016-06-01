@@ -1,1 +1,1 @@
-# react-outside-click
+# React Outside Click
