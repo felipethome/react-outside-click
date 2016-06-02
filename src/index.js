@@ -1,5 +1,5 @@
 var React = require('react');
-var isAncestor = require('../utils/is-ancestor');
+var isAncestor = require('./is-ancestor');
 
 var OutsideClick = React.createClass({
   displayName: 'OutsideClick',
@@ -8,7 +8,6 @@ var OutsideClick = React.createClass({
     children: React.PropTypes.any,
     component: React.PropTypes.string,
     onOutsideClick: React.PropTypes.func,
-    style: React.PropTypes.object,
   },
 
   getDefaultProps: function () {
@@ -20,6 +19,12 @@ var OutsideClick = React.createClass({
   componentDidMount: function () {
     if (document) {
       document.addEventListener('click', this._handleDocumentClick);
+    }
+  },
+
+  componentWillUnmount: function () {
+    if (document) {
+      document.removeEventListener('click', this._handleDocumentClick);
     }
   },
 
@@ -36,16 +41,18 @@ var OutsideClick = React.createClass({
   },
 
   render: function () {
-    return React.createElement(
-      this.props.component,
-      {
-        ref: function (elem) {
-          this._elem = elem;
-        }.bind(this),
-        style: this.props.style,
-      },
-      this.props.children
-    );
+    const {
+      children,
+      component,
+      onOutsideClick,
+      ...otherProps
+    } = this.props;
+
+    const props = Object.assign(otherProps, {
+      ref: function (elem) { this._elem = elem; }.bind(this),
+    });
+
+    return React.createElement(component, props, children);
   },
 
 });

@@ -1,0 +1,32 @@
+{
+  "name": "WebComponents",
+  "author": "Felipe Thomé <f.o.thome@raccoon.ag>",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^6.0.4",
+    "babel-preset-react": "~6.1.2",
+    "babelify": "~7.2.0",
+    "browserify": "^13.0.1",
+    "eslint": "^2.9.0",
+    "eslint-plugin-react": "^5.1.1",
+    "fbjs": "^0.8.2",
+    "gulp": "^3.9.1",
+    "gulp-concat": "~2.6.0",
+    "gulp-connect": "~2.2.0",
+    "gulp-if": "^2.0.1",
+    "gulp-notify": "~2.2.0",
+    "gulp-streamify": "~1.0.2",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "~3.0.7",
+    "merge-stream": "^1.0.0",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "vinyl-source-stream": "~1.1.0",
+    "watchify": "~3.6.0"
+  },
+  "scripts": {
+    "lint": "eslint src/*",
+    "dev": "gulp",
+    "deploy": "gulp deploy"
+  }
+}
