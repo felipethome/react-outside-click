@@ -1,9 +1,7 @@
 var browserify = require('browserify');
 var connect = require('gulp-connect');
-var cssmin = require('gulp-cssmin');
 var merge = require('merge-stream');
 var notify = require('gulp-notify');
-var concat = require('gulp-concat');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
@@ -19,7 +17,7 @@ var files = {
   ],
 
   browserify: [
-    './src/main.js',
+    './demo/main.js',
   ],
 };
 
@@ -104,25 +102,6 @@ gulp.task('deploy', function () {
     dest: './dist/scripts',
   };
 
-  var cssOpt = {
-    development: false,
-    src: files.css,
-    output: 'styles.css',
-    dest: './dist/styles',
-  };
-
-  var jsOpt = {
-    development: false,
-    src: files.js,
-    output: 'styles.js',
-    dest: './dist/scripts',
-  };
-
-  var fontsOpt = {
-    src: files.fonts,
-    dest: './dist/fonts',
-  };
-
   return merge(
     browserifyDepsTask(browserifyDepsOpt),
     browserifyTask(browserifyOpt)
@@ -136,18 +115,18 @@ gulp.task('demo', function() {
     development: true,
     src: files.dependencies,
     output: 'vendors.js',
-    dest: './build/scripts',
+    dest: './demo/build/scripts',
   };
 
   var browserifyOpt = {
     development: true,
     src: files.browserify,
     output: 'bundle.js',
-    dest: './build/scripts',
+    dest: './demo/build/scripts',
   };
 
   var serverOpt = {
-    root: './build',
+    root: './demo/build',
     port: 8889,
     livereload: true,
   };
