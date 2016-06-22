@@ -11,6 +11,9 @@
     "react-outside-click",
     "outside-click-handler"
   ],
+  "peerDependencies": {
+    "react": "0.14.x || 15.x"
+  },
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^6.0.4",
