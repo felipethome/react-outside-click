@@ -1,12 +1,21 @@
+/**
+ * Copyright Felipe Thomé.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 var React = require('react');
-var isAncestor = require('./is-ancestor');
 
 var OutsideClick = React.createClass({
   displayName: 'OutsideClick',
 
   propTypes: {
+    capture: React.PropTypes.bool,
     children: React.PropTypes.any,
     component: React.PropTypes.string,
+    onClick: React.PropTypes.func,
     onOutsideClick: React.PropTypes.func,
   },
 
@@ -16,23 +25,49 @@ var OutsideClick = React.createClass({
     };
   },
 
+  componentWillMount: function () {
+    this._wasInside = false;
+  },
+
   componentDidMount: function () {
     if (document) {
-      document.addEventListener('click', this._handleDocumentClick);
+      document.addEventListener(
+        'click',
+        this._handleDocumentClick,
+        this.props.capture
+      );
     }
   },
 
   componentWillUnmount: function () {
     if (document) {
-      document.removeEventListener('click', this._handleDocumentClick);
+      document.removeEventListener(
+        'click',
+        this._handleDocumentClick,
+        this.props.capture
+      );
+    }
+  },
+
+  _checkForBubblePhase: function (event) {
+    if (!this._wasInside) {
+      this._handleOutsideClick(event);
+    }
+    this._wasInside = false;
+  },
+
+  _checkForCapturePhase: function (event) {
+    if (this._elem && !this._elem.contains(event.target)) {
+      this._handleOutsideClick(event);
     }
   },
 
   _handleDocumentClick: function (event) {
-    if (this._elem) {
-      if (!isAncestor(event.target, this._elem)) {
-        this._handleOutsideClick(event);
-      }
+    if (this.props.capture) {
+      this._checkForCapturePhase(event);
+    }
+    else {
+      this._checkForBubblePhase(event);
     }
   },
 
@@ -40,19 +75,30 @@ var OutsideClick = React.createClass({
     if (this.props.onOutsideClick) this.props.onOutsideClick(event);
   },
 
+  _handleWrapperClick: function (event) {
+    this._wasInside = true;
+    if (this.props.onClick) this.props.onClick(event);
+  },
+
   render: function () {
-    const {
-      children,
-      component,
-      onOutsideClick,
-      ...otherProps
-    } = this.props;
+    var newProps = Object.assign({}, this.props);
+    delete newProps.capture;
+    delete newProps.children;
+    delete newProps.component;
+    delete newProps.onClick;
+    delete newProps.onOutsideClick;
 
-    const props = Object.assign(otherProps, {
-      ref: function (elem) { this._elem = elem; }.bind(this),
-    });
+    newProps.ref = function (elem) {
+      this._elem = elem;
+    }.bind(this);
 
-    return React.createElement(component, props, children);
+    newProps.onClick = this._handleWrapperClick;
+
+    return React.createElement(
+      this.props.component,
+      newProps,
+      this.props.children
+    );
   },
 
 });
