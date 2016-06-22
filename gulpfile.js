@@ -28,13 +28,15 @@ var browserifyTask = function (options) {
   var bundler = browserify({
     entries: [options.src],
     transform: [
-      ['babelify', {presets: ['react']}],
+      ['babelify', {
+        presets: ['es2015', 'stage-2', 'react'],
+        plugins: ['transform-class-properties'],
+      }],
     ],
     debug: options.development,
     cache: {}, // Requirement of watchify
     packageCache: {}, // Requirement of watchify
     fullPaths: options.development,
-    alias: ['/node_modules/react/react.js:react'],
     extensions: ['.js', '.jsx', '.json'],
   });
 
