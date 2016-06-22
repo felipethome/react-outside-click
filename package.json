@@ -38,6 +38,7 @@
   },
   "scripts": {
     "lint": "eslint src/*",
+    "build": "babel ./src --out-dir ./lib",
     "demo": "gulp"
   }
 }
