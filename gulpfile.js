@@ -16,35 +16,10 @@ var files = {
   dependencies: [
     'react',
     'react-dom',
-    'react-addons-transition-group',
-    'react-addons-css-transition-group',
-    'react-addons-update',
-    'react-tap-event-plugin',
   ],
 
   browserify: [
     './src/main.js',
-  ],
-
-  css: [
-    './node_modules/bootstrap/dist/css/bootstrap.min.css',
-    './node_modules/bootstrap-material-design/dist/css/roboto.min.css',
-    './node_modules/bootstrap-material-design/dist/css/material.min.css',
-    './node_modules/bootstrap-material-design/dist/css/ripples.min.css',
-    './src/components/data-table/styles/data-table-base.css',
-    './src/components/data-table/styles/data-table-custom.css',
-  ],
-
-  fonts: [
-    './node_modules/bootstrap/dist/fonts/*',
-    './node_modules/bootstrap-material-design/dist/fonts/*',
-  ],
-
-  js: [
-    './node_modules/jquery/dist/jquery.min.js',
-    './node_modules/bootstrap/dist/js/bootstrap.min.js',
-    './node_modules/bootstrap-material-design/dist/js/ripples.min.js',
-    './node_modules/bootstrap-material-design/dist/js/material.min.js',
   ],
 };
 
@@ -111,48 +86,6 @@ var browserifyDepsTask = function (options) {
 
 };
 
-var cssTask = function (options) {
-
-  var start = new Date();
-  console.log('Building CSS bundle');
-  return gulp.src(options.src)
-    .pipe(concat(options.output))
-    .pipe(gulpif(!options.development, cssmin()))
-    .pipe(gulp.dest(options.dest))
-    .pipe(gulpif(options.development, connect.reload()))
-    .pipe(notify(function () {
-      console.log('CSS bundle built in ' + (Date.now() - start) + 'ms');
-    }));
-
-};
-
-var jsTask = function (options) {
-
-  var start = new Date();
-  console.log('Building JS bundle');
-  return gulp.src(options.src)
-    .pipe(concat(options.output))
-    .pipe(gulpif(!options.development, streamify(uglify())))
-    .pipe(gulp.dest(options.dest))
-    .pipe(gulpif(options.development, connect.reload()))
-    .pipe(notify(function () {
-      console.log('JS bundle built in ' + (Date.now() - start) + 'ms');
-    }));
-
-};
-
-var fontsTask = function (options) {
-
-  var start = new Date();
-  console.log('Copying fonts');
-  return gulp.src(files.fonts)
-    .pipe(gulp.dest(options.dest))
-    .on('end', function () {
-      console.log('Fonts copied in ' + (Date.now() - start) + 'ms');
-    });
-
-};
-
 gulp.task('deploy', function () {
 
   var browserifyDepsOpt = {
@@ -190,15 +123,12 @@ gulp.task('deploy', function () {
 
   return merge(
     browserifyDepsTask(browserifyDepsOpt),
-    browserifyTask(browserifyOpt),
-    cssTask(cssOpt),
-    jsTask(jsOpt),
-    fontsTask(fontsOpt)
+    browserifyTask(browserifyOpt)
   );
 
 });
 
-gulp.task('default', function() {
+gulp.task('demo', function() {
 
   var browserifyDepsOpt = {
     development: true,
@@ -214,25 +144,6 @@ gulp.task('default', function() {
     dest: './build/scripts',
   };
 
-  var cssOpt = {
-    development: true,
-    src: files.css,
-    output: 'styles.css',
-    dest: './build/styles',
-  };
-
-  var jsOpt = {
-    development: true,
-    src: files.js,
-    output: 'styles.js',
-    dest: './build/scripts',
-  };
-
-  var fontsOpt = {
-    src: files.fonts,
-    dest: './build/fonts',
-  };
-
   var serverOpt = {
     root: './build',
     port: 8889,
@@ -241,19 +152,9 @@ gulp.task('default', function() {
 
   connect.server(serverOpt);
 
-  gulp.watch(Array.prototype.concat(files.js, files.css),
-    function () {
-      cssTask(cssOpt);
-      jsTask(jsOpt);
-    }
-  );
-
   return merge(
     browserifyDepsTask(browserifyDepsOpt),
-    browserifyTask(browserifyOpt),
-    cssTask(cssOpt),
-    jsTask(jsOpt),
-    fontsTask(fontsOpt)
+    browserifyTask(browserifyOpt)
   );
 
 });
