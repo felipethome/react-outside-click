@@ -12,11 +12,35 @@ var OutsideClick = React.createClass({
   displayName: 'OutsideClick',
 
   propTypes: {
+    /**
+     * The children of this component. They will be put inside of the root
+     * element without any modification.
+     */
     children: React.PropTypes.any,
+    /**
+     * The component that will wrap the children. Default: "div".
+     */
     component: React.PropTypes.string,
+    /**
+     * If true, the handler will be removed and outside click will not be
+     * be triggered. Default: false.
+     */
     disableHandler: React.PropTypes.bool,
+    /**
+     * This is mapped just to avoid ESLint warnings. Any property passed to
+     * this component that is not direct part of its logic will be placed in the
+     * root element without modification.
+     */
     onClick: React.PropTypes.func,
+    /**
+     * Callback that will be called with the event object when a click happens
+     * outside of the wrap/root element.
+     */
     onOutsideClick: React.PropTypes.func,
+    /**
+     * If true, the logic of the component will use capture events.
+     * Default: false.
+     */
     useCapture: React.PropTypes.bool,
   },
 
