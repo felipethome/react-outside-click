@@ -29,7 +29,7 @@ Import the component to your project and then wrap the nodes you want to track i
         return (
           <div>
             <OutsideClick onOutsideClick={this._handleOutsideClick}>
-              <div style={styles.elem}>Click here</div>
+              <div style={styles.elem}></div>
             </OutsideClick>
           </div>
         );

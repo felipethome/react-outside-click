@@ -1,7 +1,7 @@
 {
   "name": "react-ouside-click",
   "author": "Felipe Thomé",
-  "description": "React component to track clicks that happened outside of it.",
+  "description": "Demo - React component to track clicks that happened outside of it.",
   "license": "BSD-3-Clause",
   "repository": "https://github.com/felipethome/react-outside-click",
   "homepage": "http://felipethome.github.io/react-outside-click",
@@ -41,8 +41,6 @@
   },
   "scripts": {
     "lint": "eslint src/*",
-    "build": "babel ./src --out-dir ./lib",
     "demo": "gulp demo"
-  },
-  "version": "1.0.0"
+  }
 }

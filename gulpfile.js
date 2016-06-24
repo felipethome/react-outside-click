@@ -86,7 +86,7 @@ var browserifyDepsTask = function (options) {
 
 };
 
-gulp.task('deploy', function () {
+gulp.task('demo', function () {
 
   var browserifyDepsOpt = {
     development: false,
@@ -101,37 +101,6 @@ gulp.task('deploy', function () {
     output: 'bundle.js',
     dest: './dist/scripts',
   };
-
-  return merge(
-    browserifyDepsTask(browserifyDepsOpt),
-    browserifyTask(browserifyOpt)
-  );
-
-});
-
-gulp.task('demo', function() {
-
-  var browserifyDepsOpt = {
-    development: true,
-    src: files.dependencies,
-    output: 'vendors.js',
-    dest: './demo/build/scripts',
-  };
-
-  var browserifyOpt = {
-    development: true,
-    src: files.browserify,
-    output: 'bundle.js',
-    dest: './demo/build/scripts',
-  };
-
-  var serverOpt = {
-    root: './demo/build',
-    port: 8889,
-    livereload: true,
-  };
-
-  connect.server(serverOpt);
 
   return merge(
     browserifyDepsTask(browserifyDepsOpt),
