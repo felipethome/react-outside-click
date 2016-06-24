@@ -12,11 +12,11 @@ var OutsideClick = React.createClass({
   displayName: 'OutsideClick',
 
   propTypes: {
-    capture: React.PropTypes.bool,
     children: React.PropTypes.any,
     component: React.PropTypes.string,
     onClick: React.PropTypes.func,
     onOutsideClick: React.PropTypes.func,
+    useCapture: React.PropTypes.bool,
   },
 
   getDefaultProps: function () {
@@ -34,7 +34,7 @@ var OutsideClick = React.createClass({
       document.addEventListener(
         'click',
         this._handleDocumentClick,
-        this.props.capture
+        this.props.useCapture
       );
     }
   },
@@ -44,7 +44,7 @@ var OutsideClick = React.createClass({
       document.removeEventListener(
         'click',
         this._handleDocumentClick,
-        this.props.capture
+        this.props.useCapture
       );
     }
   },
@@ -63,7 +63,7 @@ var OutsideClick = React.createClass({
   },
 
   _handleDocumentClick: function (event) {
-    if (this.props.capture) {
+    if (this.props.useCapture) {
       this._checkForCapturePhase(event);
     }
     else {
@@ -82,11 +82,11 @@ var OutsideClick = React.createClass({
 
   render: function () {
     var newProps = Object.assign({}, this.props);
-    delete newProps.capture;
     delete newProps.children;
     delete newProps.component;
     delete newProps.onClick;
     delete newProps.onOutsideClick;
+    delete newProps.useCapture;
 
     newProps.ref = function (elem) {
       this._elem = elem;
