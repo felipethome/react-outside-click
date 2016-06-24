@@ -14,6 +14,7 @@ var OutsideClick = React.createClass({
   propTypes: {
     children: React.PropTypes.any,
     component: React.PropTypes.string,
+    disableHandler: React.PropTypes.bool,
     onClick: React.PropTypes.func,
     onOutsideClick: React.PropTypes.func,
     useCapture: React.PropTypes.bool,
@@ -30,21 +31,37 @@ var OutsideClick = React.createClass({
   },
 
   componentDidMount: function () {
-    if (document) {
-      document.addEventListener(
-        'click',
-        this._handleDocumentClick,
-        this.props.useCapture
-      );
+    this._addListener(this.props.useCapture);
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    if ((nextProps.disableHandler !== this.props.disableHandler) ||
+        (nextProps.useCapture !== this.props.useCapture)) {
+      this._removeListener(this.props.useCapture);
+      if (!nextProps.disableHandler) this._addListener(nextProps.useCapture);
     }
   },
 
   componentWillUnmount: function () {
+    this._removeListener(this.props.useCapture);
+  },
+
+  _addListener: function (useCapture) {
+    if (document) {
+      document.addEventListener(
+        'click',
+        this._handleDocumentClick,
+        useCapture
+      );
+    }
+  },
+
+  _removeListener: function (useCapture) {
     if (document) {
       document.removeEventListener(
         'click',
         this._handleDocumentClick,
-        this.props.useCapture
+        useCapture
       );
     }
   },

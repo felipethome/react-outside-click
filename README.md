@@ -40,9 +40,9 @@ Import the component to your project and then wrap the nodes you want to track i
 
 Property name | Description
 ------------- | -----------
-capture | Boolean. If true the internal logic of this component will use the capture phase. Default: false
 component | String. The component that will wrap all the children. Default: div
 onOutsideClick | Function. Callback that will be called with the event when an outside click happened.
+useCapture | Boolean. If true the internal logic of this component will use the capture phase. Default: false
 
 ## LICENSE
 
