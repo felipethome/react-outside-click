@@ -17,7 +17,7 @@ var files = {
   ],
 
   browserify: [
-    './demo/main.js',
+    './build/main.js',
   ],
 };
 
@@ -86,47 +86,24 @@ var browserifyDepsTask = function (options) {
 
 };
 
-gulp.task('deploy', function () {
-
-  var browserifyDepsOpt = {
-    development: false,
-    src: files.dependencies,
-    output: 'vendors.js',
-    dest: './dist/scripts',
-  };
-
-  var browserifyOpt = {
-    development: false,
-    src: files.browserify,
-    output: 'bundle.js',
-    dest: './dist/scripts',
-  };
-
-  return merge(
-    browserifyDepsTask(browserifyDepsOpt),
-    browserifyTask(browserifyOpt)
-  );
-
-});
-
 gulp.task('demo', function() {
 
   var browserifyDepsOpt = {
     development: true,
     src: files.dependencies,
     output: 'vendors.js',
-    dest: './demo/build/scripts',
+    dest: './build/scripts',
   };
 
   var browserifyOpt = {
     development: true,
     src: files.browserify,
     output: 'bundle.js',
-    dest: './demo/build/scripts',
+    dest: './build/scripts',
   };
 
   var serverOpt = {
-    root: './demo/build',
+    root: './build',
     port: 8889,
     livereload: true,
   };
