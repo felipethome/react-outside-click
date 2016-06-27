@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var OutsideClick = require('../src/OutsideClick');
+var OutsideClick = require('react-outside-click');
 
 var Demo = React.createClass({
   displayName: 'Demo',
