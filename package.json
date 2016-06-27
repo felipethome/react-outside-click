@@ -1,5 +1,5 @@
 {
-  "name": "react-ouside-click",
+  "name": "react-outside-click",
   "author": "Felipe Thomé",
   "description": "React component to track clicks that happened outside of it.",
   "license": "BSD-3-Clause",
