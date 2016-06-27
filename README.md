@@ -1,6 +1,6 @@
 # React Outside Click
 
-React component to track clicks that happened outside it. You just wrap the components you want to track if a click happened outside of them and ReactOutsideClick will execute a callback that you defined.
+React component to track clicks that happened outside of it. You just wrap the components you want to track if a click happened outside and ReactOutsideClick will execute a callback that you defined.
 
 [Demo](http://felipethome.github.io/react-outside-click/)
 
