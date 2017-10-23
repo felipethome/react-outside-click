@@ -12,9 +12,11 @@
     "outside-click-handler"
   ],
   "peerDependencies": {
-    "react": "0.14.x || 15.x"
+    "react": "0.14.x || 15.x || 16.x"
   },
-  "dependencies": {},
+  "dependencies": {
+    "prop-types": "*"
+  },
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-eslint": "^6.0.4",
